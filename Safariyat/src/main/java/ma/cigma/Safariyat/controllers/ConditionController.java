@@ -14,51 +14,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.cigma.Safariyat.models.Offre;
+import ma.cigma.Safariyat.models.Condition;
+import ma.cigma.Safariyat.services.ConditionService;
 import ma.cigma.Safariyat.services.MapValidationErrorService;
-import ma.cigma.Safariyat.services.OffreService;
 
 @RestController
-@RequestMapping("/api/offres")
-public class OffreController {
-
+@RequestMapping("/api/conditions")
+public class ConditionController {
+	
 	@Autowired
-	private OffreService offreService;
+	private ConditionService conditionService;
 	
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
-
 	
-	@PostMapping("")
-	public ResponseEntity<?> createUtlisateur(@Valid @RequestBody Offre Offre, BindingResult result){
+	@PostMapping("/create")
+	public ResponseEntity<?> create(@Valid @RequestBody Condition c, BindingResult result) {
 		
 		ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationError(result);
 
 		if (errorMap != null)
 			return errorMap;
+		conditionService.save(c);
 		
-		offreService.createOrUpdate(Offre);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Condition>(c,HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getOffreById(@PathVariable("id") Long id){
+	public ResponseEntity<?> getCondition(@PathVariable("id") Long id){
+		Condition condition = conditionService.findCondition(id);
 		
-		Offre Offre= offreService.findOffre(id);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Condition>(condition,HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
-	public Iterable<Offre> getAllOffres(){
-		return offreService.findAll();
+	public Iterable<Condition> getAllConditions(){
+		return conditionService.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteOffre(@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteCondition(@PathVariable("id") Long id){
 		
-		offreService.deleteOffre(id);
+		conditionService.deleteCondition(id);
 		
 		return new ResponseEntity<String>("Offre avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
 	}

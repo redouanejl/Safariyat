@@ -14,53 +14,56 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.cigma.Safariyat.models.Offre;
+import ma.cigma.Safariyat.models.Equipement;
+import ma.cigma.Safariyat.services.EquipementService;
 import ma.cigma.Safariyat.services.MapValidationErrorService;
-import ma.cigma.Safariyat.services.OffreService;
 
 @RestController
-@RequestMapping("/api/offres")
-public class OffreController {
+@RequestMapping("/api/equipements")
+public class EquipementController {
 
 	@Autowired
-	private OffreService offreService;
-	
+	private EquipementService equipementService;
+
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
 
-	
 	@PostMapping("")
-	public ResponseEntity<?> createUtlisateur(@Valid @RequestBody Offre Offre, BindingResult result){
-		
+	public ResponseEntity<?> saveEquipement(@Valid @RequestBody Equipement e, BindingResult result) {
+
 		ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationError(result);
 
 		if (errorMap != null)
 			return errorMap;
-		
-		offreService.createOrUpdate(Offre);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+
+		equipementService.save(e);
+
+		return new ResponseEntity<Equipement>(e, HttpStatus.OK);
+
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getOffreById(@PathVariable("id") Long id){
+	public ResponseEntity<?> getEquipement(@PathVariable("id") Long id) {
+
+		Equipement equipement = equipementService.findEquipement(id);
 		
-		Offre Offre= offreService.findOffre(id);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Equipement>(equipement, HttpStatus.OK);
+
 	}
 	
 	@GetMapping("/all")
-	public Iterable<Offre> getAllOffres(){
-		return offreService.findAll();
+	public Iterable<Equipement> getAllEquipements(){
+		
+		return equipementService.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteOffre(@PathVariable("id") Long id){
-		
-		offreService.deleteOffre(id);
-		
-		return new ResponseEntity<String>("Offre avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
+	public ResponseEntity<?> deleteEquipement(@PathVariable("id") Long id) {
+
+		equipementService.deleteEquipement(id);
+
+		return new ResponseEntity<String>("Equipement avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
+
 	}
 
 }

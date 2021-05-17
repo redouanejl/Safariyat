@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ReservationIdExceptionResponse {
+public class ExceptionResponse {
 
 	private String message;
 }

@@ -14,53 +14,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.cigma.Safariyat.models.Offre;
+import ma.cigma.Safariyat.models.Unite;
 import ma.cigma.Safariyat.services.MapValidationErrorService;
-import ma.cigma.Safariyat.services.OffreService;
+import ma.cigma.Safariyat.services.UniteService;
 
 @RestController
-@RequestMapping("/api/offres")
-public class OffreController {
+@RequestMapping("/api/unites")
+public class UniteController {
 
 	@Autowired
-	private OffreService offreService;
+	private UniteService uniteService;
 	
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
 
 	
 	@PostMapping("")
-	public ResponseEntity<?> createUtlisateur(@Valid @RequestBody Offre Offre, BindingResult result){
+	public ResponseEntity<?> createUtlisateur(@Valid @RequestBody Unite unite, BindingResult result){
 		
 		ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationError(result);
 
 		if (errorMap != null)
 			return errorMap;
 		
-		offreService.createOrUpdate(Offre);
+		uniteService.createOrUpdate(unite);
 		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Unite>(unite, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getOffreById(@PathVariable("id") Long id){
+	public ResponseEntity<?> getUniteById(@PathVariable("id") Long id){
 		
-		Offre Offre= offreService.findOffre(id);
+		Unite unite= uniteService.findUnite(id);
 		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Unite>(unite, HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
-	public Iterable<Offre> getAllOffres(){
-		return offreService.findAll();
+	public Iterable<Unite> getAllUnites(){
+		return uniteService.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteOffre(@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteUnite(@PathVariable("id") Long id){
 		
-		offreService.deleteOffre(id);
+		uniteService.deleteUnite(id);
 		
-		return new ResponseEntity<String>("Offre avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
+		return new ResponseEntity<String>("Unite avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
 	}
 
 }

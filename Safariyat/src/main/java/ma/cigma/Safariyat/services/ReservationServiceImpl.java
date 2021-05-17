@@ -1,13 +1,16 @@
 package ma.cigma.Safariyat.services;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ma.cigma.Safariyat.exceptions.ReservationIdException;
+import ma.cigma.Safariyat.exceptions.ReservationException;
 import ma.cigma.Safariyat.models.Reservation;
 import ma.cigma.Safariyat.repositories.ReservationRepository;
 
 @Service
+@Transactional
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
@@ -18,7 +21,7 @@ public class ReservationServiceImpl implements ReservationService {
 		try {
 			return reservationRepository.save(r);
 		} catch (Exception e) {
-			throw new ReservationIdException("Erreur de faire l'operation! la reservation n'a pas enregistrer");
+			throw new ReservationException("Erreur de faire l'operation! la reservation n'a pas enregistrer");
 		}
 	}
 
@@ -27,7 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
 		Reservation reservation = reservationRepository.findById(id).get();
 
 		if (reservation == null) {
-			throw new ReservationIdException("La reservation avec id '"+id+"' n'existe pas!");
+			throw new ReservationException("La reservation avec id '"+id+"' n'existe pas!");
 		}
 
 		return reservation;
@@ -44,7 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
 		Reservation reservation = reservationRepository.findById(id).get();
 
 		if (reservation == null) {
-			throw new ReservationIdException("Erreur de faire l'operation! car La reservation avec id '"+id+"' n'existe pas!");
+			throw new ReservationException("Erreur de faire l'operation! car La reservation avec id '"+id+"' n'existe pas!");
 		}
 
 		reservationRepository.delete(reservation);

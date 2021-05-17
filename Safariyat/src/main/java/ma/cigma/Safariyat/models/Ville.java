@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,5 +35,7 @@ public class Ville {
 	private String region;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "ville")
+	@JsonIgnore
 	private Set<Emplacement> emplacements = new HashSet<Emplacement>();
+	
 }

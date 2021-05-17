@@ -1,13 +1,16 @@
 package ma.cigma.Safariyat.services;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ma.cigma.Safariyat.exceptions.OffreIdException;
+import ma.cigma.Safariyat.exceptions.OffreException;
 import ma.cigma.Safariyat.models.Offre;
 import ma.cigma.Safariyat.repositories.OffreRepository;
 
 @Service
+@Transactional
 public class OffreServiceImpl implements OffreService {
 
 	@Autowired
@@ -18,7 +21,7 @@ public class OffreServiceImpl implements OffreService {
 		try {
 			return offreRepository.save(o);
 		} catch (Exception e) {
-			throw new OffreIdException("Erreur de faire l'operation! l'offre n'a pas enregistrer");
+			throw new OffreException("Erreur de faire l'operation! l'offre n'a pas enregistrer");
 		}
 	}
 
@@ -26,7 +29,7 @@ public class OffreServiceImpl implements OffreService {
 	public Offre findOffre(Long id) {
 		Offre offre = offreRepository.findById(id).get();
 		if (offre == null) {
-			throw new OffreIdException("L'offre avec id '"+id+"' n'existe pas!");
+			throw new OffreException("L'offre avec id '"+id+"' n'existe pas!");
 		}
 		return offre;
 	}
@@ -41,7 +44,7 @@ public class OffreServiceImpl implements OffreService {
 	public void deleteOffre(Long id) {
 		Offre offre = offreRepository.findById(id).get();
 		if (offre == null) {
-			throw new OffreIdException("Erreur de faire l'operation car l'offre avec id '"+id+"' n'existe pas!");
+			throw new OffreException("Erreur de faire l'operation car l'offre avec id '"+id+"' n'existe pas!");
 		}
 		offreRepository.delete(offre);
 	}

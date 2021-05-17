@@ -14,53 +14,61 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.cigma.Safariyat.models.Offre;
+import ma.cigma.Safariyat.models.Image;
+import ma.cigma.Safariyat.services.ImageService;
 import ma.cigma.Safariyat.services.MapValidationErrorService;
-import ma.cigma.Safariyat.services.OffreService;
 
 @RestController
-@RequestMapping("/api/offres")
-public class OffreController {
+@RequestMapping("/api/images")
+public class ImageController {
 
 	@Autowired
-	private OffreService offreService;
-	
+	private ImageService imageService;
+
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
 
-	
 	@PostMapping("")
-	public ResponseEntity<?> createUtlisateur(@Valid @RequestBody Offre Offre, BindingResult result){
-		
+	public ResponseEntity<?> saveImage(@Valid @RequestBody Image i, BindingResult result) {
+
 		ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationError(result);
 
 		if (errorMap != null)
 			return errorMap;
-		
-		offreService.createOrUpdate(Offre);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+
+		imageService.save(i);
+
+		return new ResponseEntity<Image>(i, HttpStatus.OK);
+
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getOffreById(@PathVariable("id") Long id){
+	public ResponseEntity<?> getImage(@PathVariable("id") Long id) {
+
+		Image image = imageService.findImage(id);
+
+		// handle exception
+		if (image == null)
+			throw new RuntimeException();
 		
-		Offre Offre= offreService.findOffre(id);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Image>(image, HttpStatus.OK);
+
 	}
 	
 	@GetMapping("/all")
-	public Iterable<Offre> getAllOffres(){
-		return offreService.findAll();
+	public Iterable<Image> getAllImages(){
+		
+		return imageService.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteOffre(@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteImage(@PathVariable("id") Long id) {
+
+		imageService.deleteImage(id);
+
 		
-		offreService.deleteOffre(id);
-		
-		return new ResponseEntity<String>("Offre avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
+		return new ResponseEntity<String>("Image avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
+
 	}
 
 }

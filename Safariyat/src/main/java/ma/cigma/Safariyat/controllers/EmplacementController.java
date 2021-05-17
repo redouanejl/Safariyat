@@ -14,53 +14,58 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.cigma.Safariyat.models.Offre;
+import ma.cigma.Safariyat.models.Emplacement;
+import ma.cigma.Safariyat.services.EmplacementService;
 import ma.cigma.Safariyat.services.MapValidationErrorService;
-import ma.cigma.Safariyat.services.OffreService;
 
 @RestController
-@RequestMapping("/api/offres")
-public class OffreController {
+@RequestMapping("/api/emplacements")
+public class EmplacementController {
 
 	@Autowired
-	private OffreService offreService;
+	private EmplacementService emplacementService;
 	
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
-
 	
 	@PostMapping("")
-	public ResponseEntity<?> createUtlisateur(@Valid @RequestBody Offre Offre, BindingResult result){
+	public ResponseEntity<?> saveEmplacement(@Valid @RequestBody Emplacement e, BindingResult result){
 		
 		ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationError(result);
 
 		if (errorMap != null)
 			return errorMap;
 		
-		offreService.createOrUpdate(Offre);
+		emplacementService.save(e);
 		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
-	}
+		return new ResponseEntity<Emplacement>(e, HttpStatus.OK);
+		
+	} 
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getOffreById(@PathVariable("id") Long id){
+	public ResponseEntity<?> getEmplacement(@PathVariable("id") Long id) {
+
+		Emplacement emplacement = emplacementService.findEmplacement(id);
 		
-		Offre Offre= offreService.findOffre(id);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Emplacement>(emplacement, HttpStatus.OK);
+
 	}
 	
 	@GetMapping("/all")
-	public Iterable<Offre> getAllOffres(){
-		return offreService.findAll();
+	public Iterable<Emplacement> getAllEmplacements(){
+		
+		return emplacementService.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteOffre(@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteEmplacement(@PathVariable("id") Long id) {
+
+		emplacementService.deleteEmplacement(id);
 		
-		offreService.deleteOffre(id);
-		
-		return new ResponseEntity<String>("Offre avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
+		return new ResponseEntity<String>("Emplacement avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
+
 	}
 
+	
+	
 }

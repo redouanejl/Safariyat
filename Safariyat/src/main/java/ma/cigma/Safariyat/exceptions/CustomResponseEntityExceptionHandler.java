@@ -21,17 +21,65 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 	}
 	
 	@ExceptionHandler
-	public final ResponseEntity<Object> handleOffreIdException(OffreIdException ex, WebRequest request){
+	public final ResponseEntity<Object> handleOffreException(OffreException ex, WebRequest request){
 		
-		OffreIdExceptionResponse exceptionResponse = new OffreIdExceptionResponse(ex.getMessage());
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
 		
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler
-	public final ResponseEntity<Object> handleReservationIdException(ReservationIdException ex, WebRequest request){
+	public final ResponseEntity<Object> handleReservationException(ReservationException ex, WebRequest request){
 		
-		ReservationIdExceptionResponse exceptionResponse = new ReservationIdExceptionResponse(ex.getMessage());
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+		
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleEquipementException(EquipementException ex, WebRequest request){
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+		
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleUniteException(UniteException ex, WebRequest request){
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+		
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleImageException(ImageException ex, WebRequest request){
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+		
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleEmplacementException(EmplacementException ex, WebRequest request){
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+		
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleConditionException(ConditionException ex, WebRequest request){
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+		
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleVilleException(VilleException ex, WebRequest request){
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
 		
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}

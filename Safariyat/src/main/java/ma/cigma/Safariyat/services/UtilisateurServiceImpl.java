@@ -1,5 +1,7 @@
 package ma.cigma.Safariyat.services;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import ma.cigma.Safariyat.models.Utilisateur;
 import ma.cigma.Safariyat.repositories.UtilisateurRepository;
 
 @Service
+@Transactional
 public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Autowired

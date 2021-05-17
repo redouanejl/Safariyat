@@ -14,51 +14,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.cigma.Safariyat.models.Offre;
+import ma.cigma.Safariyat.models.Ville;
+import ma.cigma.Safariyat.services.VilleService;
 import ma.cigma.Safariyat.services.MapValidationErrorService;
-import ma.cigma.Safariyat.services.OffreService;
 
 @RestController
-@RequestMapping("/api/offres")
-public class OffreController {
+@RequestMapping("/api/villes")
+public class VilleController {
 
 	@Autowired
-	private OffreService offreService;
+	private VilleService villeService;
 	
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
-
 	
-	@PostMapping("")
-	public ResponseEntity<?> createUtlisateur(@Valid @RequestBody Offre Offre, BindingResult result){
+	@PostMapping("/create")
+	public ResponseEntity<?> create(@Valid @RequestBody Ville v, BindingResult result) {
 		
 		ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationError(result);
 
 		if (errorMap != null)
 			return errorMap;
+		villeService.save(v);
 		
-		offreService.createOrUpdate(Offre);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Ville>(v, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getOffreById(@PathVariable("id") Long id){
+	public ResponseEntity<?> getVille(@PathVariable("id") int id){
+		Ville ville = villeService.findVille(id);
 		
-		Offre Offre= offreService.findOffre(id);
-		
-		return new ResponseEntity<Offre>(Offre, HttpStatus.OK);
+		return new ResponseEntity<Ville>(ville,HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
-	public Iterable<Offre> getAllOffres(){
-		return offreService.findAll();
+	public Iterable<Ville> getAllVilles(){
+		return villeService.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteOffre(@PathVariable("id") Long id){
+	public ResponseEntity<?> deleteVille(@PathVariable("id") int id){
 		
-		offreService.deleteOffre(id);
+		villeService.deleteVille(id);
 		
 		return new ResponseEntity<String>("Offre avec id '"+id+"' est supprimé avec succés!", HttpStatus.OK);
 	}
