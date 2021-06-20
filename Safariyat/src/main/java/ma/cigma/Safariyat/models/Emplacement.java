@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,11 +26,14 @@ public class Emplacement {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	private String addresse;
+	
 	private String longitude;
 	
 	private String lattitude;
 	
 	@OneToOne(mappedBy = "emplacement")
+	@JsonIgnore
 	private Offre offre;
 	
 	@ManyToOne

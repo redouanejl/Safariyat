@@ -1,15 +1,15 @@
 package ma.cigma.Safariyat.models;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +33,8 @@ public class Unite {
 	@Min(value = 1)
 	private int nombre;
 	
-	@ManyToMany(mappedBy="unites")
-    private Set<Offre> offres = new HashSet<Offre>();
+	@ManyToOne
+    @JoinColumn(name="offre_id", nullable=false)
+	@JsonIgnore
+	private Offre offre;
 }

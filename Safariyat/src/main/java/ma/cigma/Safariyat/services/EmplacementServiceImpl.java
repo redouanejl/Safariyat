@@ -54,4 +54,10 @@ public class EmplacementServiceImpl implements EmplacementService {
 
 	}
 
+	@Override
+	public Integer nb_placesBuVilleId(int ville_id) {
+		
+		return emplacementRepository.nb_placesByVilleId(ville_id);
+	}
+
 }

@@ -11,4 +11,6 @@ public interface VilleService {
 	Iterable<Ville> findAll();
 
 	void deleteVille(Integer id);
+	
+	Iterable<Ville> getRandomVilles();
 }

@@ -11,4 +11,6 @@ public interface ReservationService {
 	Iterable<Reservation> findAll();
 	
 	void deleteReservation(Long id);
+	
+	Iterable<Reservation> getReservationsByOffre(Long id);
 }

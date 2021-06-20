@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ma.cigma.Safariyat.exceptions.ReservationException;
+import ma.cigma.Safariyat.models.Offre;
 import ma.cigma.Safariyat.models.Reservation;
 import ma.cigma.Safariyat.repositories.ReservationRepository;
 
@@ -15,6 +16,9 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private OffreService offreService;
 
 	@Override
 	public Reservation createOrUpdate(Reservation r) {
@@ -51,6 +55,14 @@ public class ReservationServiceImpl implements ReservationService {
 		}
 
 		reservationRepository.delete(reservation);
+	}
+
+	@Override
+	public Iterable<Reservation> getReservationsByOffre(Long offreId) {
+		
+		Offre offre = offreService.findOffre(offreId);
+		
+		return reservationRepository.findByOffre(offre);
 	}
 
 }

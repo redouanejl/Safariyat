@@ -56,7 +56,7 @@ public class Utilisateur {
 
 	private boolean isActive;
 
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dateEnregistrement;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

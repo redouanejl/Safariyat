@@ -11,4 +11,6 @@ Emplacement save(Emplacement c);
 	Iterable<Emplacement> findAll();
 	
 	void deleteEmplacement(Long id);
+	
+	Integer nb_placesBuVilleId(int ville_id);
 }
