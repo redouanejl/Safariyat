@@ -49,4 +49,10 @@ public class OffreServiceImpl implements OffreService {
 		offreRepository.delete(offre);
 	}
 
+	@Override
+	public Iterable<Offre> getRandomOffres() {
+		
+		return offreRepository.getRandomOffres();
+	}
+
 }

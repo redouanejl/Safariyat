@@ -27,10 +27,10 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date date_arrivee;
 	
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date date_depart;
 	
 	private int nb_voyageurs;

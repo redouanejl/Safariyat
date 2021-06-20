@@ -11,4 +11,6 @@ public interface OffreService {
 	Iterable<Offre> findAll();
 
 	void deleteOffre(Long id);
+	
+	Iterable<Offre> getRandomOffres();
 }

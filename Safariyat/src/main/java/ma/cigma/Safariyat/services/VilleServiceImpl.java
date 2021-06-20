@@ -52,4 +52,10 @@ public class VilleServiceImpl implements VilleService {
 
 	}
 
+	@Override
+	public Iterable<Ville> getRandomVilles() {
+		
+		return villeRepository.getRandomVilles();
+	}
+
 }

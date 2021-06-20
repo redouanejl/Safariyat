@@ -45,11 +45,13 @@ public class Offre {
 	@NotBlank(message = "La description d'offre est obligatoire!")
 	private String description;
 
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dispo_depuis;
 
-	@JsonFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dispo_jusque;
+	
+	private String type;
 
 	@NotNull(message = "Le prix ne peut pas etre null")
 	@Min(value = 0)
@@ -72,6 +74,11 @@ public class Offre {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "offre")
 	private Set<Image> Images = new HashSet<>();
 	
+	@OneToMany
+	@JoinTable(name = "offre_unite", joinColumns = { @JoinColumn(name = "unite_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "offre_id") })
+	private Set<Unite> unites = new HashSet<Unite>();
+	
 	@ManyToOne
     @JoinColumn(name="proprietaire_id", nullable=false)
 	private Utilisateur proprietaire;
@@ -85,12 +92,6 @@ public class Offre {
 	@JoinTable(name = "offre_condition", joinColumns = { @JoinColumn(name = "condition_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "offre_id") })
 	private Set<Condition> conditions = new HashSet<Condition>();
-	
-	@ManyToMany
-	@JoinTable(name = "offre_unite", joinColumns = { @JoinColumn(name = "unite_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "offre_id") })
-	private Set<Unite> unites = new HashSet<Unite>();
-	
 	
 	@PrePersist
 	void preInsert() {

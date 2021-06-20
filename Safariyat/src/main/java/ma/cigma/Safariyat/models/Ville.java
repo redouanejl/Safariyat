@@ -34,6 +34,8 @@ public class Ville {
 	
 	private String region;
 	
+	private String imageUrl;
+	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "ville")
 	@JsonIgnore
 	private Set<Emplacement> emplacements = new HashSet<Emplacement>();
